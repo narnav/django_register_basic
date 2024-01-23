@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+  <body>
+    title: <input id="title" /> content:<input id="content" />
+    <input type="file" id="spic" />
+    <button onclick="addstudent()">Add</button>
+    <div id="display"></div>
+    <script>
+      const MY_SERVER = "http://127.0.0.1:8000";
+
+
+      const addstudent = () => {
+        const formData = new FormData();
+        formData.append("title", title.value);
+        formData.append("content", content.value);
+        formData.append("image", spic.files[0]);
+
+
+        axios.post(MY_SERVER + "/upload_image/", formData).then((r) => loadData());
+      };
+
+
+      const loadData = async () => {
+        res = await axios.get(MY_SERVER + "/get_all_images");
+        display.innerHTML = res.data.map(
+          (stu) => `<div>
+           <h2> ${stu.title} ,${stu.content} </h2>
+           <img src=${MY_SERVER}/static/images/${stu.image}/>
+            </div>`
+        );
+      };
+      loadData();
+    </script>
+  </body>
+</html>

@@ -26,7 +26,8 @@ urlpatterns = [
     path('',views.index ),
     path('books',views.books_view ),
     path('secret',views.secret ),
-    
+    path('get_all_images', views.getImages),
+
     path('books/<int:id>',views.books_view ),
     path('login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('upload_image/',views.APIViews.as_view()),

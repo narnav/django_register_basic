@@ -38,6 +38,24 @@ def register(request):
     user.save()
     return Response("new user born")
 
+    # author = models.CharField(max_length=50,null=True,blank=True)
+    # book_name = models.CharField(max_length=50,null=True,blank=True)
+    # image = models.ImageField(null=True,blank=True,default='/placeholder.png')
+
+
+
+@api_view(['GET'])
+def getImages(request):
+    res=[] #create an empty list
+    for img in Book.objects.all(): #run on every row in the table...
+        res.append({"title":img.author,
+                "description":img.book_name,
+                "completed":False,
+               "image":str( img.image)
+                }) #append row by to row to res list
+    return Response(res) #return array as json response
+
+
 class APIViews(APIView):
     parser_class=(MultiPartParser,FormParser)
     def post(self,request,*args,**kwargs):
